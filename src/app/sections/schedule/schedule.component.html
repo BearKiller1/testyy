@@ -1,1 +1,20 @@
-<p>schedule works!</p>
+<div class="calendar">
+  <div class="days">
+    <div class="day days-color"  *ngFor="let day of days">{{day}}</div>
+  </div>
+  <div class="weeks" *ngFor="let week of weeks; index as i">
+    <div class="day week-days-color" *ngFor="let day of weeks[0]; index as j">
+      <ng-template *ngIf="i == Todayrow && j == Todaycol;then IfBlock else ElseBlock">
+      </ng-template> 
+      
+      <ng-template #IfBlock>
+        <div class='today'>
+          {{week[j]}}
+        </div>
+      </ng-template> 
+      <ng-template #ElseBlock>
+        {{week[j]}}
+      </ng-template> 
+    </div>
+  </div>
+</div>

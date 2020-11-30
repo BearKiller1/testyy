@@ -1,0 +1,42 @@
+.calendar{
+  display:flex;
+  flex-direction:column;
+  justify-content:space-around;
+  width:100%;
+  height:90vh;
+  background:#333;
+  color:white;
+  border-radius:10px;
+}
+.day{
+  width:14%;
+  height:inherit;
+  background:aqua;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:3vw;
+}
+.days, .weeks{
+  width:100%;
+  height:15vh;
+  display:flex;
+  justify-content:space-around;
+}
+.weeks{height:10vh;}
+.days-color{
+  background:#FF003B;
+  color:#eee;
+}
+.week-days-color{
+  border-radius:5px;
+  cursor:pointer;
+  background:#eee;
+  color:#333;
+}
+.today{
+  text-align:center;
+  background:#00E0FF;
+  width:100%;
+  color:white;
+}
