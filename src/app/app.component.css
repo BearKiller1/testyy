@@ -1,0 +1,35 @@
+.sidemenu{
+  width:20%;
+  height:100vh;
+  z-index:100;
+  font-size:2vw;
+  position:fixed;
+  transition:all 1s;
+  display:flex;
+  align-items:center;
+  flex-direction:column;
+  justify-content:space-around;
+  text-shadow: 1px 1px #eee;
+  background-color:var(--pink);
+  -webkit-box-shadow: -1px 0px 8px 2px rgba(0,0,0,0.75);
+  -moz-box-shadow: -1px 0px 8px 2px rgba(0,0,0,0.75);
+  box-shadow: -1px 0px 8px 2px rgba(0,0,0,0.75);
+}
+.sidemenu:hover{
+  -webkit-box-shadow: -1px 0px 18px -2px rgba(0,0,0,0.75);
+  -moz-box-shadow: -1px 0px 18px -2px rgba(0,0,0,0.75);
+  box-shadow: -1px 0px 18px -2px rgba(0,0,0,0.75);
+}
+.sidemenu img{
+  width:50%;
+  height:20%;
+  border-radius:100px;
+  cursor:pointer;
+}
+
+section{
+  padding:2%;
+  position:absolute;
+  right:0;
+  width:76%;
+}

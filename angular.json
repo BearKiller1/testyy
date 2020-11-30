@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "WorkingBoard0"
+    }
+  },
+  "defaultProject": "WorkingBoard0",
+  "cli": {
+    "analytics": "3080d07e-8042-4a50-81ab-0bc04a802932"
+  }
 }
