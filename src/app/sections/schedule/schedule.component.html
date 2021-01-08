@@ -1,20 +1,117 @@
 <div class="calendar">
-  <div class="days">
-    <div class="day days-color"  *ngFor="let day of days">{{day}}</div>
+  <div class="titles" >
+    <div class="day"  *ngFor="let day of days">{{day}}</div>
   </div>
-  <div class="weeks" *ngFor="let week of weeks; index as i">
-    <div class="day week-days-color" *ngFor="let day of weeks[0]; index as j">
-      <ng-template *ngIf="i == Todayrow && j == Todaycol;then IfBlock else ElseBlock">
-      </ng-template> 
-      
-      <ng-template #IfBlock>
-        <div class='today'>
+  
+  <span *ngIf="calendarDisplay">
+    <div class="weeks" *ngFor="let week of weeks; index as i">
+      <div class="day" (click)="tasksListShow(i*7 + j)" *ngFor="let day of weeks[0]; index as j">
+        
+        <div class="taskQuants" *ngIf="TaskQuants[i*7 + j] !=0 ">
+          {{TaskQuants[i*7 + j]}}
+        </div>
+        
+        <div class='today'*ngIf="i == Todayrow && j == Todaycol;else ElseBlock">
           {{week[j]}}
         </div>
-      </ng-template> 
-      <ng-template #ElseBlock>
-        {{week[j]}}
-      </ng-template> 
+
+        <ng-template #ElseBlock>
+          {{week[j]}}
+        </ng-template> 
+        
+      </div>
+    </div>  
+  </span>
+
+
+  <div class="list" *ngIf="!calendarDisplay">
+    <div class="Tools">
+      <i class="material-icons title" (click)="Back()">arrow_back</i>
+      <i class="material-icons edit">done</i>
+      <i class="fa fa-trash-o remove"></i>
+      
+      <form class="search">
+        <input type="text" name="TaskSearch">
+        <i class="fa fa-search"></i>
+      </form>
+      
+      <div class="selectAll selection">
+         <input type="checkbox" (click)="selectAll()"> <p> Select all </p>
+       </div>
     </div>
+  
+    
+    <form class="Tasks" *ngIf="tasksListDisplay">
+      <div class="Task" *ngFor="let Task of Tasks;index as i">
+        <p class='Task-title' *ngIf="Task.done == 0" 
+          (click)="taskDescShow(i)">{{Task.task_title}}
+        </p>
+          
+        <p class='Task-title Done' *ngIf="Task.done == 1"
+          (click)="taskDescShow(i)">{{Task.task_title}}</p>
+          
+        <i class="material-icons edit">edit</i>
+        <i class="material-icons remove">remove_circle</i>
+        
+        <div class="from"> {{Task.from_time}} </div>
+        <div class="to"> {{Task.to_time}} </div>
+        <div class="priority"> {{Task.priority}} </div>
+        
+        <div class="selection">
+          <input type="checkbox" [checked]="selectedAll" name="done">  
+          
+          <i class="material-icons edit" (click)="done(i)">done</i>
+        </div>
+        
+
+      </div>
+      
+      <i class="fa fa-plus-circle new" (click)="newTaskShow()"></i>
+    </form>
+    
+    <div class="Task-description" *ngIf="taskDescDisplay">
+      <div *ngFor="let desc of Tasks;index as i">
+        <p *ngIf="i == DescSelector">{{desc.task_desc}}</p>
+      </div>
+      
+    </div>
+    
+    <form class="create-task" *ngIf="newTaskDisplay">
+      <input type="text" name="title" placeholder="Task title">
+      <textarea type="text" name="desc" placeholder="So what we gotta do"></textarea>
+      
+      <select class="" name="category">
+        <option disabled selected>Select Category</option>
+        <option [value]="category" *ngFor="let category of categories">{{category}}</option>
+      </select>
+      
+      <select class="" name="project">
+        <option disabled selected>Select project</option>
+        <option [value]="category" *ngFor="let project of projects">{{project}}</option>
+      </select>
+      
+      <p>From</p>
+      <input type="datetime-local" name="from" value="">
+      
+      <p>To</p>
+      <input type="datetime-local" name="to" value="">
+      
+
+      
+      <button type="submit" name="create">Create Task</button>
+      <i class="fa fa-remove new"  (click)="newTaskShow()"></i>
+    </form>
   </div>
 </div>
+
+<!-- <div class="" *ngFor="let item of ATasks">
+  id_task->{{item.id_task}}  <br>
+  task_title->{{item.task_title}} <br>
+  task_date->{{item.task_date}}  <br>
+  from_time->{{item.from_time}}  <br>
+  to_time->{{item.to_time}}  <br>
+  sub_tasks_quant->{{item.sub_tasks_quant}}  <br>
+  done->{{item.done}}  <br>
+  priority->{{item.priority}}  <br>
+  task_desc->{{item.task_desc}}<br>
+</div> -->

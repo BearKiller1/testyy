@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GetTasksService } from '../get-tasks.service';
 
 @Component({
   selector: 'app-schedule',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./schedule.component.css']
 })
 export class ScheduleComponent implements OnInit {
-  days = Array("mon","tue","wen","thu","fri","sat","sun"); // just titles for html
+  days = Array("Mon","Tue","Wen","Thu","Fri","Sat","Sun");
   weeks = [
     ["","","","","","",""],
     ["","","","","","",""],
@@ -14,54 +15,128 @@ export class ScheduleComponent implements OnInit {
     ["","","","","","",""],
     ["","","","","","",""],
     ["","","","","","",""]
-  ]; // 2D array for fill with month numbers
+  ];
+  Tasks = ["1","2","3"];
+  ATasks = [];
+  categories = [
+    ["category one"],
+    ["category one"],
+    ["category one"],
+    ["category one"],
+    ["category one"]
+  ];
+  projects = [
+    ["project one"],
+    ["project one"],
+    ["project one"],
+    ["project one"],
+    ["project one"]
+  ];
   
-  //week and day to obtain current day block in calendar
+  TaskQuants = Array();
   Todayrow = 0;
   Todaycol = 0;
-
-  constructor() {
-    // getting dates to know first and last monthes' numbers and days
+  
+  selectedAll = false;
+  
+  calendarDisplay  = true;
+  tasksListDisplay = false;
+  newTaskDisplay   = false;
+  taskDescDisplay  = false;
+  
+  DescSelector = 0;
+  
+  constructor(private tasks:GetTasksService) {
+    this.tasks.getTasks().subscribe( (data:[]) => {
+      this.Tasks = data;
+      console.warn(this.Tasks);
+    });
+    
     var nowDate = new Date();
     var firstDate = new Date(nowDate.getFullYear(), nowDate.getMonth(), 1);
     var lastDate = new Date(nowDate.getFullYear(), nowDate.getMonth() + 1, 0);
     
     var lastNum = Number(lastDate.getDate()); // 31 || 30 ending of month
 
-    var firstDay; // which day is the 1st in month
-    var ind = 1; // start filling array from
+    var firstDay;
+    var ind = 1;
     
-    // get first day with georgian week system *starts with monday
-    (firstDate.getDay() == 0) ?  // java system reads sunday as 1st dat in a week
-    firstDay = 6: // if its sunday make it last
+    (firstDate.getDay() == 0) ?  
+    firstDay = 6: 
     firstDay = firstDate.getDay()-1; 
     
-
-    // this loop goes 6times(the quant rows of array)
-    // child loop goes 7 times(for week days)
     for (let week = 0; week < this.weeks.length; week++) {
       for (let days = 0; days < 7; days++) {  
         if(ind > lastNum)
-          ind = 1; // if it goes above 31 or 30 make it 1
+          ind = 1;
           
-        // fill last month's left days before start fillin this month
+        var taskquant = this.tasks.getQuantTasks(12);
+        this.TaskQuants.push(taskquant);
+            
+        if(this.Todayrow == 0 && this.Todaycol == 0){
+          if(new Date().getDate() == ind){
+            this.Todayrow = week;
+            this.Todaycol = days;
+          }
+        }
+
         if(days < firstDay && week == 0){
           (lastNum == 31) ? 
-          this.weeks[week][days]= ((30) - (firstDay-days-1)).toString(): 
-          this.weeks[week][days]= ((31) - (firstDay-days-1)).toString();
+          this.weeks[week][days]= (30 - (firstDay-days-1)).toString(): 
+          this.weeks[week][days]= (31 - (firstDay-days-1)).toString();
           continue;
         }
-        // get today row and col
-        if(new Date().getDate() == ind){
-          this.Todayrow = week;
-          this.Todaycol = days;
-        }
-        // fill this month
+        
         this.weeks[week][days]=ind.toString();
         ind++;
       } 
     }
   }
+  Done(id){
+    
+  }
+
+  // NAVIGATION
+  
+  Back(){
+    if(this.tasksListDisplay){
+      this.tasksListDisplay = false;
+      this.calendarDisplay = true;
+    }
+    if(this.taskDescDisplay){
+      this.taskDescDisplay = false;
+      this.tasksListDisplay = true;
+    }
+    else if(!this.tasksListDisplay && !this.taskDescDisplay){
+      this.calendarDisplay = true;
+      this.newTaskDisplay = false;
+    }
+  }
+  selectAll(){
+    // this.selectedAll = !this.selectedAll;
+    this.selectedAll ? 
+    this.selectedAll = false:
+    this.selectedAll = true;
+  }
+  tasksListShow(id){
+    this.calendarDisplay = false;
+    this.tasksListDisplay = true;
+    //bla bla bla get tasks from api
+  }
+  taskDescShow(selector){
+    this.tasksListDisplay = false;
+    this.taskDescDisplay = true;
+    this.DescSelector = selector;
+    
+  }
+  newTaskShow(){
+    this.tasksListDisplay = !this.tasksListDisplay;
+    this.newTaskDisplay = !this.newTaskDisplay;
+    // this.newTaskDisplay ? 
+    // (this.newTaskDisplay = false, this.tasksListDisplay = true):
+    // (this.newTaskDisplay = true, this.tasksListDisplay = false);
+  }
+  
 
   ngOnInit(): void {}
 

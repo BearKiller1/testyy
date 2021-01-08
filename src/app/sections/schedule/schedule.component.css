@@ -1,4 +1,5 @@
-.calendar{
+
+.calendar, span{
   display:flex;
   flex-direction:column;
   justify-content:space-around;
@@ -8,7 +9,12 @@
   color:white;
   border-radius:10px;
 }
+.calendar{
+  padding:0.5vw 0;
+  height:86vh;
+}
 .day{
+  position:relative;
   width:14%;
   height:inherit;
   background:aqua;
@@ -17,18 +23,18 @@
   align-items:center;
   font-size:3vw;
 }
-.days, .weeks{
+.titles, .weeks{
   width:100%;
   height:15vh;
   display:flex;
   justify-content:space-around;
 }
 .weeks{height:10vh;}
-.days-color{
+.titles > .day{
   background:#FF003B;
   color:#eee;
 }
-.week-days-color{
+.weeks > .day{
   border-radius:5px;
   cursor:pointer;
   background:#eee;
@@ -40,3 +46,138 @@
   width:100%;
   color:white;
 }
+.taskQuants{
+  width:13%;
+  font-size:1vw;
+  height:3vh;
+  background:#FF003B;
+  color:white;
+  position:absolute;
+  top:1vh;
+  right:1vw;
+  border-radius:100px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.list,span{
+  width:100%;
+  height:70vh;
+  background:#333;
+}
+.Task,.Tools{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  text-align:center;
+  width:100%;
+  align-items:center;
+}
+.Tools{
+  height:10vh;
+  border-bottom:1px solid white;
+ }
+.Tools i{font-size:3vw;}
+.Task i{font-size:2vw;}
+.Task {
+  border-top:1px solid white;
+  border-bottom:1px solid white;
+}
+.title{
+  grid-column:1;
+}
+.edit{
+  grid-column:2;
+}
+.remove{
+  grid-column:3;
+}
+.search{
+  grid-column:4/7;
+}
+
+
+.from{
+  grid-column:4;
+}
+.to{
+  grid-column:5;
+}
+.priority{
+  grid-column:6;
+}
+
+.selection{
+  text-align:left;
+  grid-column:7;
+}
+
+.Tasks{
+  position:relative;
+  overflow:scroll;
+  width:100%;
+  height:60vh;
+  color:#fff;
+}
+.Tasks::-webkit-scrollbar{display:none;}
+.new{
+  background:#333;
+  border-radius:100%;
+  position:fixed;
+  right:4vw;
+  bottom:10.5vh;
+  font-size:3.5vw;
+}
+
+.list i{
+  cursor:pointer;
+  color:#00E0FF;
+}
+input[type="checkbox"]{
+  margin-right:10%;
+  height:4vh;
+}
+.selectAll{
+  font-size:1.5vw;
+  flex-direction:row;
+  align-items:center;
+  width:100%;
+  display:flex;
+  color:#00E0FF;
+}
+.create-task{
+  width:100%;
+  height:60vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-around;
+  align-items:center;
+}
+
+.search input{
+  border-radius:5px;
+  display:flex;
+  text-align:center;
+  width:100%;
+  height:inherit;
+}
+.search i{
+  right:10%;
+  position:absolute;
+  width:10%;
+  font-size:1.5vw;
+}
+.search{
+  padding:0 10%;
+  position:relative;
+  width:80%;
+  height:6vh;
+  display:flex;
+  align-items:center;
+}
+.Task-title{cursor:pointer;}
+.Done{
+  text-decoration: line-through;
+  text-decoration-color:#fff;
+  color:#9C9C9C;
+}
+.Task-description{width:90%;padding:5%;}

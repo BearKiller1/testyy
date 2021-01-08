@@ -4,6 +4,8 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { HttpClientModule } from '@angular/common/http';
+
 import { SectionsModule } from './sections/sections.module';
 
 @NgModule({
@@ -13,7 +15,8 @@ import { SectionsModule } from './sections/sections.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    SectionsModule
+    SectionsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
